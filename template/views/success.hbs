@@ -42,17 +42,24 @@
         font-weight: bold;
         text-decoration: none;
       }
+      .username{
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        color: #2196f3;
+      }
     </style>
   </head>
 
   <body>
+    {{>header1}}
     <div class="form-container">
       <div class="form-header">
         <h2>Congratulations!</h2>
         <p>You have successfully Logged IN.</p>
+        <br>
+        <h2 class="username">{{user}} !!</h2>
       </div>
       <div class="form-footer">
-        <p>Welcome <b>{{user}}</b></p>
+        <h3>Welcome 🥳</h3>
          
       </div>
     </div>

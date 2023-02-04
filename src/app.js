@@ -148,7 +148,7 @@ app.post('/login', async(req, res) => {
  
   
   if (isMatched === true) {
-    const token = jwt.sign({ userid }, JWT_SECRET, { expiresIn: '1000s' });
+    const token = jwt.sign({ userid }, JWT_SECRET, { expiresIn: '100s' });
     res.cookie('token', token, { maxAge: 60 * 60 * 1000 });
     res.redirect('/welcome');
   } 
@@ -169,7 +169,22 @@ app.get('/welcome', (req, res) => {
   } else {
     try {
       const decoded = jwt.verify(token, JWT_SECRET);
-      res.send(`Welcome, USER ID : ${decoded.userid}`);
+      // res.send(`Welcome, USER ID : ${decoded.userid}`);
+
+      AllUser.findOne({_id: decoded.userid })
+      .select("name")
+      .exec(async (err, user) => {
+        try{
+          res.render('success' , {user:user.name}) ; 
+        }catch(err){
+          console.log(err) ;
+          res.send('Oops ! Some Error Occured ! ') ; 
+        }
+
+
+      }); 
+       
+     
     } catch (error) {
       res.clearCookie('token');
       res.redirect('/');
